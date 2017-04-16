@@ -3,7 +3,7 @@ import './navbar.scss';
 
 class NavBarController {
   $onInit() {
-    this.brand = 'CustomerSpec';
+    this.brand = 'Customer Entry Spec';
   }
 }
 
