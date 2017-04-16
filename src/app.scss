@@ -1,0 +1,41 @@
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background-color: #e7e9ed;
+  padding-bottom: 80px;
+}
+
+.container{
+  &.container-fixed {
+    max-width: 112rem;
+  }
+}
+
+[ng-cloak] {
+  display: none;
+}
+
+
+.modal-container .modal-header,
+.modal-container .modal-footer {
+  background-color: #f0f1f4;
+}
+.modal.active .modal-container,
+.modal:target .modal-container {
+  width: 64rem;
+}
+
+.modal:target .modal-container,
+.modal.active .modal-container {
+  animation: none;
+}

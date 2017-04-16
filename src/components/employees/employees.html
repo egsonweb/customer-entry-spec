@@ -1,0 +1,216 @@
+<div class="employees-list">
+  <div class="modal active" ng-if="$ctrl.showModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <button class="btn btn-clear float-right" ng-click="$ctrl.cancel()"></button>
+        <div class="modal-title">
+          <span ng-class="{'ion ion-person-add': !$ctrl.editing, 'ion ion-edit': $ctrl.editing}"></span>
+          <span>{{ $ctrl.editing ? 'Update' : 'Add' }} Employee</span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <form>
+            <div class="columns">
+              <div class="column col-6">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="First Name"
+                    ng-model="$ctrl.newEmployee.firstname" />
+                </div>
+              </div>
+              <div class="column col-6">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Last Name"
+                    ng-model="$ctrl.newEmployee.lastname" />
+                </div>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column col-12">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-input"
+                    placeholder="Email Address"
+                    ng-model="$ctrl.newEmployee.email" />
+                </div>
+              </div>
+              <div class="column col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Phone number (Optional)"
+                    ng-model="$ctrl.newEmployee.phone" />
+                </div>
+              </div>
+              <div class="column col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Street Name (Optional)"
+                    ng-model="$ctrl.newEmployee.address.streetName" />
+                </div>
+              </div>
+              <div class="column col-12">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Street Address (Optional)"
+                    ng-model="$ctrl.newEmployee.address.streetAddress" />
+                </div>
+              </div>
+            </div>
+
+            <div class="columns">
+              <div class="column col-4">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="City (Optional)"
+                    ng-model="$ctrl.newEmployee.address.city" />
+                </div>
+              </div>
+              <div class="column col-4">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="State (Optional)"
+                    ng-model="$ctrl.newEmployee.address.state" />
+                </div>
+              </div>
+              <div class="column col-4">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Zipcode (Optional)"
+                    ng-model="$ctrl.newEmployee.address.zipcode" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-link" ng-click="$ctrl.cancel()">Cancel</button>
+        <button class="btn btn-primary" ng-if="!$ctrl.editing" ng-click="$ctrl.add()">Add</button>
+        <button class="btn btn-primary" ng-if="$ctrl.editing" ng-click="$ctrl.update()">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-fixed">
+    <div class="columns">
+      <div class="column col-6 employee-list-title">
+        <h4 class="title">
+          Employees <span ng-if="$ctrl.employees.length">({{ $ctrl.employees.length }})</span>
+        </h4>
+      </div>
+
+      <div class="column col-6 employee-list-header">
+        <a
+          href="#"
+          class="btn btn-primary remove-employee"
+          ng-click="$ctrl.deleteSelected()"
+          ng-if="$ctrl.selected()">
+          <span class="icon ion ion-trash-b"></span>Delete Selected
+        </a>
+        <a ng-click="$ctrl.show()" href="#" class="btn btn-primary add-employee">
+          <span class="icon ion ion-android-add"></span>Add Employee
+        </a>
+      </div>
+
+      <div class="column col-12 employee-list-detail">
+        <div class="columns">
+          <div class="column col-12" ng-if="!$ctrl.employees.length">
+            <div class="employee-list-noresults">
+              <p><span class="ion ion-paper-airplane"></span></p>
+              <p>No employees found. To add one, click the add button above</p>
+            </div>
+          </div>
+
+          <div class="column col-12" ng-if="$ctrl.employees.length">
+            <div class="columns">
+              <div class="column col-12">
+                <div class="employee-list-search">
+                  <input
+                    type="text"
+                    class="form-input"
+                    placeholder="Search here"
+                    ng-model="searchText.name" />
+                </div>
+              </div>
+              <div class="column col-12">
+                <div class="employee-list-table">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr class="employee-detail">
+                        <th class="employee-detail__toggle">
+                          <input type="checkbox" ng-model="$ctrl.checkAll" ng-change="$ctrl.selectAll()" />
+                        </th>
+                        <th class="employee-detail__info">Name</th>
+                        <th class="employee-detail__email">Email</th>
+                        <th class="employee-detail__phone">Phone</th>
+                        <th class="employee-detail__address">Address</th>
+                        <th class="employee-detail__controls"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="employee-detail"
+                        ng-repeat="employee in $ctrl.employees | filter:searchText.name:strict">
+                        <td class="employee-detail__toggle">
+                            <input type="checkbox" ng-model="employee.selected" ng-click="$ctrl.select(employee.employeeId)" />
+                        </td>
+                        <td class="employee-detail__info">
+                          <div class="employee-avatar">
+                            <img ng-src="{{ employee.avatar }}" alt="{{ employee.firstname }}">
+                          </div>
+                          <div class="employee-info">
+                            <span>{{ employee.firstname }} {{ employee.lastname }}</span>
+                            <span>{{ employee.job.title || 'NA' }}</span>
+                          </div>
+                        </td>
+                        <td class="employee-detail__email">{{ employee.email | lowercase }}</td>
+                        <td class="employee-detail__phone">{{ employee.phone }}</td>
+                        <td class="employee-detail__address">
+                          {{ employee.address.streetName }},
+                          {{ employee.address.streetAddress }},
+                          {{ employee.address.city }},
+                          {{ employee.address.state }} {{ employee.address.zipcode }}
+                        </td>
+                        <td class="employee-detail__controls">
+                          <div class="btn-group-block">
+                            <button class="btn btn-primary employee-edit" ng-click="$ctrl.edit(employee)">
+                              <span class="ion ion-edit"></span>
+                            </button>
+                            <button class="btn employee-remove" ng-click="$ctrl.delete(employee.employeeId)">
+                              <span class="ion ion-trash-a"></span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  	</div>
+  </div>
+</div>

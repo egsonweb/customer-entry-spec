@@ -1,0 +1,190 @@
+$table-br-color: darken(#ecf0f1, 25%);
+$table-bg-color: #fafafa;
+
+.employees-list {
+  margin-top: 20px;
+  .employee-list-table {
+    overflow: auto;
+    border: 0.1rem $table-br-color solid;
+  }
+  .title {
+    margin: 0;
+  }
+  .table {
+    border: none;
+    tr th {
+      text-transform: uppercase;
+      background-color: #f0f0f0;
+      border-bottom: 0.1rem $table-br-color solid;
+      &.employee-detail__toggle {
+        input[type="checkbox"] {
+          top: 8px;
+        }
+      }
+    }
+    td {
+      border-bottom: 0.1rem $table-br-color solid;
+    }
+    th, td {
+      position: relative;
+      background-color: $table-bg-color;
+    }
+
+    tbody {
+      tr:hover td {
+        background-color: #f0f0f0;
+      }
+    }
+  }
+
+  .employee-list-noresults {
+    display: flex;
+    flex: 1 1 100%;
+    height: 165px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $table-bg-color;
+    border: 1px $table-br-color solid;
+    span {
+      font-size: 44px;
+      color: darken(#7f8c8d, 25%);
+    }
+  }
+
+  .employee-list-header {
+    display: flex;
+    justify-content: flex-end;
+    .btn.btn-primary {
+      margin-left: 8px;
+      .icon {
+        margin-right: 8px;
+      }
+    }
+    .remove-employee {
+      background-color: #e85600;
+      border-color: #e85600;
+      color: white;
+    }
+    .employee-list-search {
+      position: relative;
+      input[type="text"] {
+        padding-left: 36px;
+        z-index: auto;
+      }
+      span::before {
+        z-index: 99;
+        position: absolute;
+        font-family: "Ionicons";
+        font-size: 18px;
+        content: "\f4a4";
+        top: 5px;
+        left: 10px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .employee-list-detail {
+    .employee-detail__toggle {
+      max-width: 60px;
+      padding-top: 10px;
+      padding-bottom: 0;
+      width: 60px;
+    }
+    .employee-detail__info {
+      width: 260px;
+    }
+    .employee-detail__controls {
+      width: 118px;
+    }
+    .employee-detail__phone {
+      width: 120px;
+    }
+    .employee-detail__email,
+    .employee-detail__address {
+      width: 218px;
+    }
+  }
+}
+
+.employee-detail__toggle {
+  input[type="checkbox"] {
+    height: 24px;
+    margin-left: 18px;
+    outline: none;
+    border: none;
+    position: absolute;
+    top: 1.5rem;
+    box-shadow: none;
+    appearance: none;
+    font-weight: 700;
+    font-family: "Ionicons";
+    font-size: 24px;
+    color: #454d5d;
+    &:before {
+      content: "\f401";
+    }
+    &:checked:before {
+      content: "\f400";
+    }
+  }
+}
+
+.employee-detail__info {
+  overflow: hidden;
+  .employee-avatar,
+  .employee-info {
+    float: left;
+  }
+  .employee-avatar {
+    padding-right: 18px;
+    img {
+      width: 40px;
+      height: auto;
+      border-radius: 50%;
+      border: 2px $table-br-color solid;
+    }
+  }
+  .employee-info {
+    width: 164px;
+    span:first-child {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+  }
+}
+
+$edit-bg-color: #eff1fa;
+$edit-sp-color: #454d5d;
+
+.employee-detail__controls {
+  .employee-edit {
+    padding: 0.2rem 0.8rem;
+    background-color: $edit-sp-color;
+    border-color: $edit-sp-color;
+    &:hover {
+      background-color: #5764c6;
+    }
+    span {
+      color: $edit-bg-color;
+    }
+  }
+  .employee-remove{
+    background-color: transparent;
+    border: none;
+    &:hover {
+      background-color: transparent;
+      border: none;
+      span {
+        color: #e85600;
+      }
+    }
+    span {
+      font-size: 24px;
+      color: $edit-sp-color;
+    }
+  }
+}
