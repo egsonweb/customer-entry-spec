@@ -9,7 +9,7 @@ class FakerService {
               employeeId: faker.random.uuid(),
               firstname: faker.name.firstName(),
               lastname: faker.name.lastName(),
-              phone: faker.phone.phoneNumber(),
+              phone: faker.phone.phoneNumberFormat(),
               email: faker.internet.email(),
               avatar: faker.internet.avatar(),
               address: {
@@ -17,7 +17,7 @@ class FakerService {
                   streetAddress: faker.address.streetAddress(),
                   city: faker.address.city(),
                   state: faker.address.stateAbbr(),
-                  zipcode: faker.address.zipCode()
+                  zipcode: faker.address.zipCode().split('-')[0]
               },
               job: {
                   title: faker.name.jobTitle(),
