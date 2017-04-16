@@ -1,5 +1,5 @@
 import Low from 'lowdb';
-import faker from 'faker';
+// import faker from 'faker';
 
 class DatabaseService {
   static get $inject() {
@@ -20,49 +20,24 @@ class DatabaseService {
     this.models.defaults({ employees: [] }).write();
   }
 
+  model(entity) {
+    return this.models.get(entity);
+  }
+
   seed() {
-    this.status = this.$window.localStorage.getItem('STATUS') || false;
+    this.status = this.$window.localStorage.getItem('db.status') || false;
     if (!this.status) {
-      console.log('Seeding database');
       this.faker.generate().then(employees => {
         this.models.set('employees', employees).write();
-        this.$window.localStorage.setItem('STATUS', true);
-        this.$rootScope.$broadcast('seed', {
+        this.$window.localStorage.setItem('db.status', true);
+        this.$rootScope.$broadcast('seeded', {
           employees: this.models.get('employees').value(),
-          status: this.$window.localStorage.getItem('STATUS')
+          status: this.$window.localStorage.getItem('db.status')
         });
       });
     }
 
     return;
-  }
-
-  find() {
-    return this.models.get('employees').value();
-  }
-
-  insert(employee) {
-    const newEmployee = Object.assign(employee, {
-      employeeId: faker.random.uuid(),
-      avatar: faker.internet.avatar(),
-      job: {
-          title: faker.name.jobTitle(),
-          type: faker.name.jobType()
-      }
-    });
-    return this.models.get('employees').unshift(newEmployee).write();
-  }
-
-  update(employee) {
-    return this.models.get('employees').find({
-      employeeId: employee.employeeId
-    }).assign(employee).write();
-  }
-
-  remove(employeeId) {
-    return this.models.get('employees').remove({
-      employeeId: employeeId
-    }).write();
   }
 }
 

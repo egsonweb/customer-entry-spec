@@ -20,10 +20,10 @@ class EmployeesController {
     this.editing = false;
     this.submit = false;
 
-    const unsubscribe = this.$scope.$on('seed', (scope, { employees, status}) => {
+    const unsubSeeded = this.$scope.$on('seeded', (scope, { employees, status}) => {
       this.employees = employees;
       if (status) {
-        unsubscribe();
+        unsubSeeded();
       }
     });
 	}
@@ -31,16 +31,14 @@ class EmployeesController {
 	$onInit() {
     this.employeesService.find().then(employees => {
       this.employees = employees;
-      this.employees = this.employees.map(employee => {
-        return Object.assign(employee, {selected: false});
-      })
       this.reset();
     });
   }
 
   add() {
-    this.employeesService.create(this.newEmployee).then(() => {
+    this.employeesService.create(this.newEmployee).then(newEmployee => {
       this.$scope.$evalAsync(() => {
+        console.log(newEmployee);
         this.reset();
       });
     });
@@ -64,23 +62,16 @@ class EmployeesController {
 
   delete(id) {
     this.employeesService.delete(id).then(employee => {
-      let employeeIdx = this.findById(id);
       console.log(employee);
-      // console.log(employeeIdx);
-      this.$scope.$evalAsync(() => {
-        this.employees.splice(employeeIdx, 1);
-      });
+      this.$scope.$evalAsync();
     });
   }
 
   deleteSelected() {
-    console.log(this.selectedEmployees);
-  }
-
-  selected() {
-    return this.employees.filter(employee => {
-      return employee.selected === true;
-    }).length;
+    let selectedEmployees = this.employees.filter(employee => employee.selected);
+    selectedEmployees.forEach(employee => {
+      this.delete(employee.employeeId);
+    });
   }
 
   edit(employee) {
@@ -89,38 +80,34 @@ class EmployeesController {
     this.newEmployee = angular.copy(employee);
   }
 
-  findById(employeeId) {
-    let employees = this.employees;
-    let length = employees.length;
-    while(length--) {
-      if (employees[length].employeeId === employeeId) {
-        return length;
-      }
-    }
-  }
-
-  findSelected() {
-    return this.employees.filter(employee => employee.selected).length;
-  }
-
   update() {
-    this.employeesService.update(this.newEmployee).then(() => {
+    this.employeesService.update(this.newEmployee).then(employee => {
+      console.log(employee);
       this.$scope.$evalAsync(() => {
         this.reset();
       });
     });
   }
 
-  select(id) {
-    let employeeIdx = this.findById(id);
-    let length = this.employees.length;
+  selected() {
+    return this.employees.filter(employee => employee.selected).length;
+  }
 
-    this.checkAll = (length === this.findSelected()) ? true : false;
-    if (this.employees[employeeIdx].selected) {
-      this.employees[employeeIdx].selected = true;
-    } else {
-      this.employees[employeeIdx].selected = false;
-    }
+  select(employeeId) {
+    this.employeesService.findById(employeeId).then(employeeIdx => {
+      console.log(employeeIdx);
+      let allEmployees = this.employees.length;
+      let selectedEmployees = this.selected();
+
+      this.$scope.$evalAsync(() => {
+        this.checkAll = (allEmployees === selectedEmployees) ? true : false;
+        if (this.employees[employeeIdx].selected) {
+          this.employees[employeeIdx].selected = true;
+        } else {
+          this.employees[employeeIdx].selected = false;
+        }
+      });
+    });
   }
 
   selectAll() {

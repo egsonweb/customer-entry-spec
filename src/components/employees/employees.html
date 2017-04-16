@@ -135,7 +135,7 @@
 
       <div class="column col-12 employee-list-detail">
         <div class="columns">
-          <div class="column col-12" ng-if="!$ctrl.employees.length">
+          <div class="column col-12" ng-if="!$ctrl.employees.length || results.length === 0">
             <div class="employee-list-noresults">
               <p><span class="ion ion-paper-airplane"></span></p>
               <p>No employees found. To add one, click the add button above</p>
@@ -169,9 +169,13 @@
                       </tr>
                     </thead>
                     <tbody>
+                      <tr ng-if="results.length < 1">
+                        <td colspan="6" class="text-center">No results found!</td>
+                      </tr>
                       <tr
                         class="employee-detail"
-                        ng-repeat="employee in $ctrl.employees | filter:searchText.name:strict">
+                        ng-if="results.length > 0"
+                        ng-repeat="employee in $ctrl.employees | filter:searchText.name:strict as results track by employee.employeeId">
                         <td class="employee-detail__toggle">
                             <input type="checkbox" ng-model="employee.selected" ng-click="$ctrl.select(employee.employeeId)" />
                         </td>
