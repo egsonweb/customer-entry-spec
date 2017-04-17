@@ -17,12 +17,9 @@ See below for the project's list of features:
 
 ### Quick start
 
-> Clone/Download the repo from git
+> Clone/Download the zip file/repo from git
 
 ```bash
-# clone repo
-git clone git@github.com:egsonweb/customer-entry-spec.git
-
 # change directory to your app
 $ cd customer-entry-spec
 
