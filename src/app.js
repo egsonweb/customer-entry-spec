@@ -1,5 +1,6 @@
 import angular from 'angular';
-import uirouter from 'angular-ui-router';
+import Uirouter from 'angular-ui-router';
+import ngMessages from 'angular-messages';
 
 import DatabaseService from './shared/db';
 import FakerService from './shared/faker';
@@ -25,7 +26,8 @@ config.$inject = ['$urlRouterProvider'];
 
 angular
   .module('synopsis', [
-    uirouter,
+    ngMessages,
+    Uirouter,
     Common,
     Components
   ])

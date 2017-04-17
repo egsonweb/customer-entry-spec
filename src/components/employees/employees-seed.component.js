@@ -3,16 +3,19 @@ import employeesSeedTemplate from './employees-seed.html';
 class EmployeesSeedController {
   static get $inject() {
     return [
+      '$window',
       'DatabaseService'
     ];
   }
 
-  constructor(DatabaseService) {
+  constructor($window, DatabaseService) {
+    this.$window = $window;
     this.db = DatabaseService;
+    this.seeded = this.$window.localStorage.getItem('db.status') || false;
   }
 
   seed() {
-    this.db.seed();
+    this.db.seed().then(() => {});
   }
 }
 

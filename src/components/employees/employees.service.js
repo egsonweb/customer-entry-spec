@@ -14,15 +14,9 @@ class EmployeesService {
     this.employees = this.db.model('employees')
 	}
 
-  resolve(query) {
-    return new Promise(resolve => {
-      resolve(query);
-    })
-  }
-
 	find() {
     const query = this.employees.value(); 
-    return this.resolve(query);
+    return this.db.resolve(query);
 	}
 
   findById(id) {
@@ -30,7 +24,7 @@ class EmployeesService {
       employeeId: id
     }).value();
 
-    return this.resolve(query);
+    return this.db.resolve(query);
   }
 
   create(employee) {
@@ -44,7 +38,7 @@ class EmployeesService {
     });
     const query = this.employees.unshift(newEmployee).write();
 
-    return this.resolve(query[0]);
+    return this.db.resolve(query[0], 2000);
  }
 
   update(employee) {
@@ -52,7 +46,7 @@ class EmployeesService {
       employeeId: employee.employeeId
     }).assign(employee).write();
 
-    return this.resolve(query);
+    return this.db.resolve(query, 2000);
   }
 
   delete(employeeId) {
@@ -60,7 +54,7 @@ class EmployeesService {
       employeeId: employeeId
     }).write();
 
-    return this.resolve(query);
+    return this.db.resolve(query);
   }
 }
 
