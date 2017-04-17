@@ -1,6 +1,6 @@
 # Customer Entry Spec
  
-See below for the original project's list of features:  
+See below for the project's list of features:  
 
 ### Features
 
