@@ -1,5 +1,7 @@
 # Customer Entry Spec
  
+![Demo](demo.gif)
+
 See below for the project's list of features:  
 
 ### Features
