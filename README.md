@@ -4,7 +4,7 @@ See below for the project's list of features:
 
 ### Features
 
-* Heavily commented webpack configuration with reasonable defaults.
+* Commented webpack configuration defaults.
 * ES6, and ES7 support with babel.
 * Source maps included in all builds.
 * Development server with live reload.
@@ -19,7 +19,7 @@ See below for the project's list of features:
 
 ```bash
 # clone repo
-git clone <repo_url>
+git clone git@github.com:egsonweb/customer-entry-spec.git
 
 # change directory to your app
 $ cd customer-entry-spec
